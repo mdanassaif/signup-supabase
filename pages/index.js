@@ -22,9 +22,16 @@ export default function Register() {
 
   const signInWithGoogle = async () => {
     setLoading(true);
-    await supabase.auth.signInWithOAuth({ provider: "google" });
+    await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: "https://supabasesignup.vercel.app", // Redirects back to signup app
+      },
+    });
     setLoading(false);
   };
+  
+  
 
   const fetchUserDetails = async (email) => {
     const { data } = await supabase.from("users").select("name").eq("email", email).single();
